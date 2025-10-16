@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LANA_V2 – لوحة الفروع</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- فعّل سكربت خرائط Google بإضافة مفتاحك في الإعدادات ثم إزالة التعليق التالي -->
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&loading=async"></script> -->
+</head>
+
+<body>
+  <header class="app-header">
+    <div class="brand">LANA_V2</div>
+    <div class="header-actions">
+      <button id="langToggle" class="ghost"></button>
+      <button id="themeToggle" class="ghost"></button>
+      <span class="live-badge" id="liveBadge">—</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <a href="dashboard.html" class="" data-tab="dashboard" style="text-decoration:none;"><button class="" data-tab="dashboard">الرئيسية</button></a>
+    <a href="add.html" class="" data-tab="add" style="text-decoration:none;"><button class="" data-tab="add">أضف فرع</button></a>
+    <a href="branches.html" class="" data-tab="branches" style="text-decoration:none;"><button class="" data-tab="branches">تعديل الفروع</button></a>
+    <a href="files.html" class="" data-tab="files" style="text-decoration:none;"><button class="" data-tab="files">ملفات</button></a>
+    <a href="settings.html" class="active" data-tab="settings" style="text-decoration:none;"><button class="active" data-tab="settings">الإعدادات</button></a>
+    </nav>
+
+  <main>
+
+    <section id="dashboard" class="tab">
+      <div class="hero"><h1 id="heroTitle"></h1><p id="heroSubtitle"></p></div>
+      <div class="filters">
+        <div class="row">
+          <label><span id="lblFrom"></span><input type="date" id="dateFrom"></label>
+          <label><span id="lblTo"></span><input type="date" id="dateTo"></label>
+          <button class="secondary" id="btnWeek"></button>
+          <button class="secondary" id="btnMonth"></button>
+          <button class="primary" id="btnApply"></button>
+        </div>
+        <div class="row">
+          <label><span id="lblTarget"></span><input type="number" step="0.1" min="0" max="5" id="targetRating" value="4.2"></label>
+          <button class="secondary" id="btnRecalculate"></button>
+        </div>
+      </div>
+      <div class="cards" id="branchesGrid"></div>
+      <div class="table-wrap">
+        <h3 id="tblTitle"></h3>
+        <table id="branchesTable">
+          <thead><tr>
+            <th id="thName"></th><th id="thRating"></th><th id="thReviews"></th>
+            <th id="thBefore"></th><th id="thAfter"></th><th id="thChange"></th><th id="thToTarget"></th>
+          </tr></thead>
+          <tbody id="branchesTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="add" class="tab">
+      <h2 id="addTitle"></h2>
+      <form id="addForm" class="form">
+        <label><span id="lblBranchName"></span><input type="text" id="branchName" required></label>
+        <label><span id="lblMapsUrl"></span><input type="url" id="mapsUrl"></label>
+        <details class="hint"><summary id="sumWhyPlaceId"></summary><div class="hint-body" id="hintPlaceId"></div></details>
+        <label><span id="lblPlaceId"></span><input type="text" id="placeId"></label>
+        <div class="row">
+          <button type="submit" class="primary" id="btnAddBranch"></button>
+          <button type="button" id="btnResolvePlaceId" class="secondary"></button>
+        </div>
+      </form>
+    </section>
+
+    <section id="branches" class="tab">
+      <h2 id="branchesTitle"></h2>
+      <div id="branchesList"></div>
+    </section>
+
+    <section id="files" class="tab">
+      <h2 id="filesTitle"></h2>
+      <div class="row">
+        <label><span id="lblExportFrom"></span><input type="date" id="expFrom"></label>
+        <label><span id="lblExportTo"></span><input type="date" id="expTo"></label>
+        <button class="primary" id="btnExportCsv"></button>
+      </div>
+      <p id="exportNote" class="muted"></p>
+    </section>
+
+    <section id="settings" class="tab">
+      <h2 id="settingsTitle"></h2>
+      <form class="form">
+        <label><span id="lblApiKey"></span><input type="password" id="apiKey" placeholder="AIza..."></label>
+        <label><span id="lblRefresh"></span><input type="number" id="refreshMinutes" min="1" value="1"></label>
+        <div class="row">
+          <button type="button" id="btnSaveSettings" class="primary"></button>
+          <button type="button" id="btnTestFetch" class="secondary"></button>
+        </div>
+        <p class="muted" id="settingsTips"></p>
+      </form>
+      <div id="mapHolder" style="height:0;width:0;overflow:hidden;"></div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer"><span id="footerText"></span></footer>
+  <script src="app.js"></script>
+  <script>
+    // Boot helper: activate the desired tab on load
+    document.addEventListener("DOMContentLoaded", function(){
+      try {
+        if (typeof switchTab === "function") { switchTab("settings"); }
+        // Force-visible the active tab in case CSS/JS timing differs
+        document.querySelectorAll("main .tab").forEach(function(s){
+          s.classList.toggle("active", s.id === "settings");
+        });
+        document.querySelectorAll(".tabs button").forEach(function(b){
+          b.classList.toggle("active", b.dataset.tab === "settings");
+        });
+      } catch(e) { /* noop */ }
+    });
+  </script>
+</body>
+</html>

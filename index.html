@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LANA_V2 – لوحة الفروع</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&loading=async"></script> -->
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">LANA_V2</div>
+    <div class="header-actions">
+      <button id="langToggle" class="ghost"></button>
+      <button id="themeToggle" class="ghost"></button>
+      <span class="live-badge" id="liveBadge">—</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <a href="index.html" style="text-decoration:none;"><button class="active" data-tab="dashboard">الرئيسية</button></a>
+    <a href="add.html" style="text-decoration:none;"><button data-tab="add">أضف فرع</button></a>
+    <a href="branches.html" style="text-decoration:none;"><button data-tab="branches">تعديل الفروع</button></a>
+    <a href="files.html" style="text-decoration:none;"><button data-tab="files">ملفات</button></a>
+    <a href="settings.html" style="text-decoration:none;"><button data-tab="settings">الإعدادات</button></a>
+  </nav>
+
+  <main>
+    <!-- We only include the dashboard section here;
+         other pages have their own sections activated -->
+    <section id="dashboard" class="tab active">
+      <div class="hero"><h1 id="heroTitle"></h1><p id="heroSubtitle"></p></div>
+      <div class="filters">
+        <div class="row">
+          <label><span id="lblFrom"></span><input type="date" id="dateFrom"></label>
+          <label><span id="lblTo"></span><input type="date" id="dateTo"></label>
+          <button class="secondary" id="btnWeek"></button>
+          <button class="secondary" id="btnMonth"></button>
+          <button class="primary" id="btnApply"></button>
+        </div>
+        <div class="row">
+          <label><span id="lblTarget"></span><input type="number" step="0.1" min="0" max="5" id="targetRating" value="4.2"></label>
+          <button class="secondary" id="btnRecalculate"></button>
+        </div>
+      </div>
+      <div class="cards" id="branchesGrid"></div>
+      <div class="table-wrap">
+        <h3 id="tblTitle"></h3>
+        <table id="branchesTable">
+          <thead><tr>
+            <th id="thName"></th><th id="thRating"></th><th id="thReviews"></th>
+            <th id="thBefore"></th><th id="thAfter"></th><th id="thChange"></th><th id="thToTarget"></th>
+          </tr></thead>
+          <tbody id="branchesTbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer"><span id="footerText"></span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
